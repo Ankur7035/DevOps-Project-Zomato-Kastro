@@ -1,0 +1,19 @@
+---
+- name: Install Java on DEV
+  hosts: dev
+  become: yes
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Java
+      ansible.builtin.apt:
+        name: openjdk-17-jdk
+        state: present
+
+    - name: Verify Java
+      ansible.builtin.command: java -version
+      register: java_output
+      changed_when: false
